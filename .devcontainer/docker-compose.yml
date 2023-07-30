@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sleep infinity
+    volumes:
+      - ../:/workspace:cached
+    ports:
+      - 3000:3000
+
+  gcs:
+    image: fsouza/fake-gcs-server
+    tty: true
+    ports:
+      - 4443:4443
+    volumes:
+      - ${PWD}/data:/data/sample-bucket
+    command: -scheme http
